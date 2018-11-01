@@ -4,7 +4,7 @@
     <Files>
       <File FileName="Assets\Scripts\Player_Movement.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\IA_Behaviour.cs" Line="9" Column="30" />
-      <File FileName="Assets\Scripts\Deplacement_NavMesh.cs" Line="35" Column="17" />
+      <File FileName="Assets\Scripts\Deplacement_NavMesh.cs" Line="88" Column="102" />
       <File FileName="Assets\Scripts\IA_Behaviour_Avoiding_Ennemies.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Bullet_Behaviour.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\IA_Supervisor.cs" Line="1" Column="1" />
