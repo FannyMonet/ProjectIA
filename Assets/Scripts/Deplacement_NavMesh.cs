@@ -124,7 +124,6 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 
 			moveToPoint ();
-			Debug.Log("Move to point");
 			lineOfSight.SetPosition(0, transform.position);
 
 

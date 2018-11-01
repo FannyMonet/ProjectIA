@@ -1,19 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 public class Player_Movement : MonoBehaviour {
 
     public int speed;
     public Rigidbody rgbd;
+
+    public Transform target;
+    public NavMeshAgent agent;
+
+    public float remainingDistance;
 	// Use this for initialization
 	void Start () {
 		rgbd = gameObject.GetComponent<Rigidbody>();
+		agent = gameObject.GetComponent<NavMeshAgent>();
+		agent.destination = target.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		remainingDistance = agent.remainingDistance;
 	}
 
 	void FixedUpdate ()

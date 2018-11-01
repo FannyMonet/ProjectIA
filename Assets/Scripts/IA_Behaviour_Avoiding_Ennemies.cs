@@ -18,6 +18,8 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
     public int EnemyDistanceRun;
 
+    public GameObject target;
+
     // Use this for initialization
     void Start () {
 
@@ -25,13 +27,20 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
         maxSpeed = test;
 		agent.speed = maxSpeed;
         agent.acceleration =test;
-
+        player = GameObject.Find("PLAYER");
+		target = GameObject.Find("REGIS_GOAL");
 
     }
 
 	// Update is called once per frame
 	void Update ()
 	{
+		if (player.GetComponent<Player_Movement> ().remainingDistance < agent.remainingDistance) {
+			Debug.Log ("Player distance :" +player.GetComponent<Player_Movement> ().remainingDistance +", Agent distance"+ agent.remainingDistance+ " Agent is LOOSING");
+		} else {
+			Debug.Log ("Player distance :" +player.GetComponent<Player_Movement> ().remainingDistance +", Agent distance"+ agent.remainingDistance+ " Agent is WINNING");
+
+		}
 		float distance = Vector3.Distance (transform.position, ennemies.transform.position);
 		if (distance < EnemyDistanceRun) {
 			Vector3 dirToEnnemy = transform.position - ennemies.transform.position;
@@ -40,6 +49,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 		} else {
 			attackPlayer(); 
+
 		}
 
 
@@ -50,7 +60,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
     private void attackPlayer()
     {
-        agent.destination = this.player.transform.position;
+        agent.destination = this.target.transform.position;
 
     }
 
