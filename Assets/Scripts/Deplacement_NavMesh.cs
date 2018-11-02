@@ -8,39 +8,37 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 
     private NavMeshAgent agent;
-    public int test;
     private float maxSpeed;
 
     public GameObject player;
-    public GameObject bullet;
 
     private int shootCounter;
     public int shootCounterAtStart;
 
     public bool playerDetected;
 
-    public Transform[] ennemyPattern;
-    public int index;
-    public Light light;
+    public Transform[] ennemyPattern;//The way point of the ennemy
+    public int index;//index of the ennemyPattern tab
+    public Light light;//Light that will change if a player is seen
 
 	public float duration = 1.0F;
-    public Color color0 = Color.red;
-    public Color color1 = Color.blue;
+    public Color color0 = Color.red;//Color when IA detect player
+    public Color color1 = Color.blue;//Default color
 
-    public IA_Supervisor supervisor;
+    public IA_Supervisor supervisor;//The supervisor of all IA
 
-    public int distance;
-    public LineRenderer lineOfSight;
+    public int distance;//
+    public LineRenderer lineOfSight;//The cone vision of the IA
 
-    public float VisionArea;
+    public float VisionArea;//Angle of view
 
     // Use this for initialization
     void Start () {
 
         agent = this.GetComponent<NavMeshAgent>();
-        maxSpeed = test;
+        maxSpeed = 120;
 		agent.speed = maxSpeed;
-        agent.acceleration =test;
+        agent.acceleration =120;
 		shootCounter = shootCounterAtStart;
 		lineOfSight = this.GetComponent<LineRenderer>();
 
@@ -50,6 +48,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
 	void Update ()
 	{
 
+	//If the player is detected, follow it and change screen color
 		if (playerDetected) {
 			float t = Mathf.PingPong (Time.time, duration) / duration;
 			light.color = Color.Lerp (color0, color1, t);
@@ -65,16 +64,19 @@ public class Deplacement_NavMesh : MonoBehaviour {
 				}
 			}
 		} else {
-			RaycastHit hitInfoCenter; //= Physics.Raycast (transform.position, transform.right, distance);
-			RaycastHit hitInfoLeft; //= Physics.Raycast (transform.position, transform.right, distance);
-			RaycastHit hitInfoRight; //= Physics.Raycast (transform.position, transform.right, distance);
+			RaycastHit hitInfoCenter; 
+			RaycastHit hitInfoLeft; 
+			RaycastHit hitInfoRight; 
 
 
 			//RAYCAST CENTER
+			//if raycast hit something
 			if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.forward), out hitInfoCenter, distance)) {
 
 				Debug.DrawLine (transform.position, hitInfoCenter.point, Color.red);
 				lineOfSight.SetPosition (1, hitInfoCenter.point);
+
+				//if the thing is the player
 				if (hitInfoCenter.collider.CompareTag ("Player")) {
 					this.GetComponent<AudioSource> ().PlayOneShot (this.GetComponent<AudioSource> ().clip);
 					supervisor.playerDetected = true;
@@ -118,12 +120,8 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			}
 
 
-
-
-
-
-
 			moveToPoint ();
+			//allways center the line renderer
 			lineOfSight.SetPosition(0, transform.position);
 
 
@@ -131,12 +129,14 @@ public class Deplacement_NavMesh : MonoBehaviour {
   }
 
 
-
+  //change the destination of the IA to be the player transform
     private void attackPlayer()
     {
+
         agent.destination = this.player.transform.position;
 
     }
+	//change the destination of the IA if it has reached it previous destination
 
 	private void moveToPoint ()
 	{
@@ -147,11 +147,12 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
     }
 
-	private void Shoot()
+	/*private void Shoot()
     {
        Instantiate(bullet, transform.position, Quaternion.identity);
 
     }
+    */
 
 
 	void OnTriggerEnter (Collider col)

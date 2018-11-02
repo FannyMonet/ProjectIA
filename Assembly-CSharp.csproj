@@ -96,10 +96,9 @@
      <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
      <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+     <Compile Include="Assets\Scripts\Bottle_Behaviour.cs" />
      <Compile Include="Assets\Scripts\BottleArcRenderer.cs" />
-     <Compile Include="Assets\Scripts\Bullet_Behaviour.cs" />
      <Compile Include="Assets\Scripts\Deplacement_NavMesh.cs" />
-     <Compile Include="Assets\Scripts\IA_Behaviour.cs" />
      <Compile Include="Assets\Scripts\IA_Behaviour_Avoiding_Ennemies.cs" />
      <Compile Include="Assets\Scripts\IA_Supervisor.cs" />
      <Compile Include="Assets\Scripts\Player_Movement.cs" />

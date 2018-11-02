@@ -27,7 +27,7 @@ public class BottleArcRenderer : MonoBehaviour {
 		RenderArc();
 	}
 
-
+	//Calculate all the position for the arc Array
 	void RenderArc () {
 		lr.SetVertexCount(resolution + 1);
 		lr.SetPositions(CalculateArcArray());

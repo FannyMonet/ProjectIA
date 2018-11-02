@@ -18,6 +18,7 @@ public Material detectedMaterial;
 	// Update is called once per frame
 	void Update ()
 	{
+	//if the player is detected, every IA knows it
 		if (playerDetected) {
 			for (int i = 0; i < agents.Length; i++) {
 			   agents[i].GetComponent<MeshRenderer>().material = detectedMaterial;

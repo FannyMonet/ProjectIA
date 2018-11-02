@@ -1,13 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Deplacement_NavMesh.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\IA_Behaviour.cs">
     <Files>
-      <File FileName="Assets\Scripts\Player_Movement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player_Movement.cs" Line="73" Column="12" />
+      <File FileName="Assets\Scripts\Deplacement_NavMesh.cs" Line="139" Column="78" />
+      <File FileName="Assets\Scripts\IA_Behaviour_Avoiding_Ennemies.cs" Line="61" Column="43" />
+      <File FileName="Assets\Scripts\IA_Supervisor.cs" Line="21" Column="48" />
+      <File FileName="Assets\Scripts\BottleArcRenderer.cs" Line="30" Column="48" />
+      <File FileName="Assets\Scripts\Bottle_Behaviour.cs" Line="12" Column="41" />
       <File FileName="Assets\Scripts\IA_Behaviour.cs" Line="9" Column="30" />
-      <File FileName="Assets\Scripts\Deplacement_NavMesh.cs" Line="88" Column="102" />
-      <File FileName="Assets\Scripts\IA_Behaviour_Avoiding_Ennemies.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Bullet_Behaviour.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\IA_Supervisor.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
