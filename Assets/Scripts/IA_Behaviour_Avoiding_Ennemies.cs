@@ -50,9 +50,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
           	
 
 
-		if (index <= minIndex) {
-		index = minIndex;
-		}
+		
 
 
 	//know if the agent is winning or not
@@ -89,10 +87,13 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 	private void moveToPoint ()
 	{
-		if (!agent.hasPath) {
+		if (agent.remainingDistance < 50) {
 			//Debug.Log("agent hasn't path");
 			index = (index + 1) % safePoints.Length;
-			agent.destination = safePoints [index].position;
+			if (index <= minIndex) {
+				index = minIndex;
+			}
+			agent.destination = safePoints[index].position;
 		} 
 
 

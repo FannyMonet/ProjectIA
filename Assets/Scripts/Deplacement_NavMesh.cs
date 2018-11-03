@@ -39,9 +39,9 @@ public class Deplacement_NavMesh : MonoBehaviour {
     void Start () {
 
         agent = this.GetComponent<NavMeshAgent>();
-        maxSpeed = 120;
+        maxSpeed = 100;
 		agent.speed = maxSpeed;
-        agent.acceleration =120;
+        agent.acceleration =100;
 		shootCounter = shootCounterAtStart;
 		lineOfSight = this.GetComponent<LineRenderer>();
 

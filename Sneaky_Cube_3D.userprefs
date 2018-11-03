@@ -3,11 +3,12 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\IA_Behaviour_Avoiding_Ennemies.cs">
     <Files>
       <File FileName="Assets\Scripts\Player_Movement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Deplacement_NavMesh.cs" Line="34" Column="5" />
-      <File FileName="Assets\Scripts\IA_Behaviour_Avoiding_Ennemies.cs" Line="44" Column="2" />
+      <File FileName="Assets\Scripts\Deplacement_NavMesh.cs" Line="44" Column="31" />
+      <File FileName="Assets\Scripts\IA_Behaviour_Avoiding_Ennemies.cs" Line="95" Column="5" />
       <File FileName="Assets\Scripts\IA_Supervisor.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\BottleArcRenderer.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Bottle_Behaviour.cs" Line="22" Column="3" />
+      <File FileName="Assets\Scripts\Bottle_Behaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Balise_Behaviour.cs" Line="49" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
