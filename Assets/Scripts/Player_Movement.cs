@@ -23,6 +23,7 @@ public class Player_Movement : MonoBehaviour {
 
     public AudioSource source;//AudioSource for throwing sound
     public AudioClip clip;//Throwing sound
+
 	// Use this for initialization
 	void Start () {
 		rgbd = gameObject.GetComponent<Rigidbody>();
@@ -73,18 +74,16 @@ public class Player_Movement : MonoBehaviour {
 	//Movement
 	void FixedUpdate ()
 	{
-		if (Input.GetAxis ("Vertical") > 0.01f) {
-			gameObject.transform.Translate (new Vector3 (0, 0, 0.1f)*speed);
-		}
-		else if (Input.GetAxis ("Vertical") < -0.01f) {
-			gameObject.transform.Translate (new Vector3 (0, 0, -0.1f)*speed);
-		}
+			if (Input.GetAxis ("Vertical") > 0.01f) {
+				gameObject.transform.Translate (new Vector3 (0, 0, 0.1f) * speed);
+			} else if (Input.GetAxis ("Vertical") < -0.01f) {
+				gameObject.transform.Translate (new Vector3 (0, 0, -0.1f) * speed);
+			}
 
-		if (Input.GetAxis ("Horizontal") > 0.01f) {
-			gameObject.transform.Translate (new Vector3 (0.1f, 0, 0)*speed);
+			if (Input.GetAxis ("Horizontal") > 0.01f) {
+				gameObject.transform.Translate (new Vector3 (0.1f, 0, 0) * speed);
+			} else if (Input.GetAxis ("Horizontal") < -0.01f) {
+				gameObject.transform.Translate (new Vector3 (-0.1f, 0, 0) * speed);
+			}
 		}
-		else if (Input.GetAxis ("Horizontal") < -0.01f) {
-			gameObject.transform.Translate (new Vector3 (-0.1f, 0,0 )*speed);
-		}
-	}
 }

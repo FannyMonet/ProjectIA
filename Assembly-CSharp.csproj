@@ -96,13 +96,6 @@
      <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
      <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
-     <Compile Include="Assets\Scripts\Bottle_Behaviour.cs" />
-     <Compile Include="Assets\Scripts\BottleArcRenderer.cs" />
-     <Compile Include="Assets\Scripts\Deplacement_NavMesh.cs" />
-     <Compile Include="Assets\Scripts\IA_Behaviour_Avoiding_Ennemies.cs" />
-     <Compile Include="Assets\Scripts\IA_Supervisor.cs" />
-     <Compile Include="Assets\Scripts\Player_Movement.cs" />
-     <Compile Include="Assets\Scripts\transformBottle.cs" />
      <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\MotionBlur.cginc" />
      <None Include="Assets\PostProcessing\Resources\Shaders\Fog.shader" />
@@ -231,6 +224,10 @@
  <Reference Include="UnityEngine.StandardEvents">
  <HintPath>C:/Users/Paul/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="NavMeshComponents.csproj">
+      <Project>{73FF296A-4CF8-1E62-B4A6-4B354CFD555C}</Project>      <Name>NavMeshComponents</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

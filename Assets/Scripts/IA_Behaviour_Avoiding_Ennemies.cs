@@ -7,7 +7,7 @@ using System;
 
 public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
-	private NavMeshAgent agent;
+	public NavMeshAgent agent;
 
     public GameObject ennemies;
 
@@ -19,6 +19,16 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
     public int EnemyDistanceRun;
 
     public GameObject target;
+
+    public int index;
+
+    public Transform[] safePoints;
+
+
+
+		public GameObject destination;
+
+
 
     // Use this for initialization
     void Start () {
@@ -35,6 +45,12 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+          	
+
+
+
+
+
 	//know if the agent is winning or not
 		if (player.GetComponent<Player_Movement> ().remainingDistance < agent.remainingDistance) {
 			Debug.Log ("Player distance :" +player.GetComponent<Player_Movement> ().remainingDistance +", Agent distance"+ agent.remainingDistance+ " Agent is LOOSING");
@@ -45,12 +61,14 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 		float distance = Vector3.Distance (transform.position, ennemies.transform.position);
 		//if the agent is close to ennemy, it avoid them instead of trying to reach the end of the level
 		if (distance < EnemyDistanceRun) {
+		//Debug.Log("EnnemyDistance RUN!!");
 			Vector3 dirToEnnemy = transform.position - ennemies.transform.position;
 			Vector3 newPos = transform.position + dirToEnnemy;
 			agent.destination =newPos;
 
 		} else {
-			reachDestination(); 
+
+			moveToPoint();
 
 		}
 
@@ -59,9 +77,20 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 
   //set the movement of the agent to reach the target
-    private void reachDestination()
-    {
-        agent.destination = this.target.transform.position;
+    private void reachDestination ()
+	{
+
+		agent.destination = this.target.transform.position;
+    }
+
+	private void moveToPoint ()
+	{
+		if (!agent.hasPath) {
+			//Debug.Log("agent hasn't path");
+			index = (index + 1) % safePoints.Length;
+			agent.destination = safePoints [index].position;
+		} 
+
 
     }
 

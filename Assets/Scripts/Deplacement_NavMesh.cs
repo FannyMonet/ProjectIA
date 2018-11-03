@@ -32,6 +32,9 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
     public float VisionArea;//Angle of view
 
+    public BoxCollider boxCol;
+
+
     // Use this for initialization
     void Start () {
 
@@ -75,6 +78,8 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 				Debug.DrawLine (transform.position, hitInfoCenter.point, Color.red);
 				lineOfSight.SetPosition (1, hitInfoCenter.point);
+				if(boxCol!=null)
+					boxCol.size = new Vector3(boxCol.size.x, boxCol.size.y, Vector3.Distance(lineOfSight.GetPosition(0), lineOfSight.GetPosition(1))/25);
 
 				//if the thing is the player
 				if (hitInfoCenter.collider.CompareTag ("Player")) {
@@ -132,7 +137,6 @@ public class Deplacement_NavMesh : MonoBehaviour {
   //change the destination of the IA to be the player transform
     private void attackPlayer()
     {
-
         agent.destination = this.player.transform.position;
 
     }
@@ -157,12 +161,12 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 	void OnTriggerEnter (Collider col)
 	{
-	if(col.CompareTag("Player") && !playerDetected){
-			this.GetComponent<AudioSource>().PlayOneShot(this.GetComponent<AudioSource>().clip);
-	   this.player = col.gameObject;
-	   supervisor.playerDetected = true;
+		if (col.CompareTag ("Player") && !playerDetected) {
+			this.GetComponent<AudioSource> ().PlayOneShot (this.GetComponent<AudioSource> ().clip);
+			this.player = col.gameObject;
+			supervisor.playerDetected = true;
 			
-	}
+		}
 	}
 
 
