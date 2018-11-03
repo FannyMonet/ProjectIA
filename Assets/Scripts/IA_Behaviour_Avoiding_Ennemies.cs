@@ -21,6 +21,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
     public GameObject target;
 
     public int index;
+    public int minIndex;
 
     public Transform[] safePoints;
 
@@ -39,6 +40,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
         agent.acceleration =test;
         player = GameObject.Find("PLAYER");
 		target = GameObject.Find("REGIS_GOAL");
+		minIndex = index;
 
     }
 
@@ -48,7 +50,9 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
           	
 
 
-
+		if (index <= minIndex) {
+		index = minIndex;
+		}
 
 
 	//know if the agent is winning or not

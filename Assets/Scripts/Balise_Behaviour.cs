@@ -27,7 +27,7 @@ public int safePoint;
 			Regis.agent.destination = Regis.safePoints[i].position;
 		} else if (col.CompareTag ("Player")) {
 			//Debug.Log("TOUCHE UN Player");
-
+			Regis.minIndex = safePoint+1;
 			Destroy (this);
 		}
 	}
@@ -40,7 +40,7 @@ public int safePoint;
 			Regis.agent.destination = Regis.safePoints[i].position;
 		} else if (col.CompareTag ("Player")) {
 			//Debug.Log("TOUCHE UN Player");
-
+			Regis.minIndex = safePoint+1;
 			Destroy (this);
 		}
 	}

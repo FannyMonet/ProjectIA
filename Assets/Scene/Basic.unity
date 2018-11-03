@@ -5057,6 +5057,61 @@ Transform:
   m_Father: {fileID: 1439027075}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1321736475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1321736478}
+  - component: {fileID: 1321736477}
+  - component: {fileID: 1321736476}
+  m_Layer: 0
+  m_Name: Balise (1)
+  m_TagString: Balise
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1321736476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1321736475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33beece5c06e494b8d5ca594b596080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Regis: {fileID: 0}
+  safePoint: 1
+--- !u!65 &1321736477
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1321736475}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 345.01, y: 200.04, z: 119.4}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1321736478
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1321736475}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1556, y: 126, z: -116}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1347453958
 GameObject:
   m_ObjectHideFlags: 0
@@ -5695,9 +5750,10 @@ MonoBehaviour:
   ennemies: {fileID: 1081922006}
   test: 120
   player: {fileID: 1098782479}
-  EnemyDistanceRun: 200
+  EnemyDistanceRun: 500
   target: {fileID: 1098782479}
   index: 0
+  minIndex: 0
   safePoints:
   - {fileID: 1317265454}
   - {fileID: 1782970891}
@@ -6414,6 +6470,47 @@ Transform:
   m_Father: {fileID: 130208672}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1567757137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1567757138}
+  - component: {fileID: 1567757139}
+  m_Layer: 0
+  m_Name: ConeVisionTrigger (1)
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1567757138
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1567757137}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 3, z: 4.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1810218003}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1567757139
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1567757137}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.42, y: 1, z: 7.54}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1586217093
 GameObject:
   m_ObjectHideFlags: 0
@@ -7277,7 +7374,7 @@ MonoBehaviour:
   distance: 230
   lineOfSight: {fileID: 0}
   VisionArea: 0.06
-  boxCol: {fileID: 0}
+  boxCol: {fileID: 1567757139}
 --- !u!195 &1810217998
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7378,6 +7475,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2012978573}
+  - {fileID: 1567757138}
   m_Father: {fileID: 929501380}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
