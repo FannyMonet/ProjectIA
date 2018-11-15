@@ -33,7 +33,9 @@ public class Deplacement_NavMesh : MonoBehaviour {
     public float VisionArea;//Angle of view
 
     public BoxCollider boxCol;
-
+    public bool isTrapped;
+    public int waitingTimeAtStart;
+    private int waitingTime;
 
     // Use this for initialization
     void Start () {
@@ -44,7 +46,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
         agent.acceleration =100;
 		shootCounter = shootCounterAtStart;
 		lineOfSight = this.GetComponent<LineRenderer>();
-
+        waitingTime = waitingTimeAtStart;
     }
 
 	// Update is called once per frame
@@ -123,11 +125,20 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 			}
 
-
-			moveToPoint ();
-			//allways center the line renderer
+            if (!isTrapped)
+                moveToPoint();
+            else
+            {
+                waitingTime--;
+                if (waitingTime == 0)
+                {
+                    moveToPoint();
+                    waitingTime = waitingTimeAtStart;
+                    
+                }
+            }
+            //allways center the line renderer
 			lineOfSight.SetPosition(0, transform.position);
-
 
 		}
   }
@@ -147,6 +158,12 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			index = (index + 1) % ennemyPattern.Length;
 			agent.destination = ennemyPattern [index].position;
 		}
+        else if(isTrapped)
+        {
+            index = (index + 1) % ennemyPattern.Length;
+            agent.destination = ennemyPattern[index].position;
+            isTrapped = false;
+        }
 
     }
 
@@ -166,6 +183,11 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			supervisor.playerDetected = true;
 			
 		}
+        if(col.CompareTag("Bottle") && !playerDetected)
+        {
+            isTrapped = true;
+            this.agent.destination = col.transform.position;
+        }
 	}
 
 
