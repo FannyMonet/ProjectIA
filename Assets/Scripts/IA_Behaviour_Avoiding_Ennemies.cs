@@ -20,11 +20,15 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
     public GameObject target;
 
+	public GameObject bonus;
+
+
     public int index;
     public int minIndex;
 
     public Transform[] safePoints;
 
+    public bool tryToGetBonus;
 
 
 		public GameObject destination;
@@ -40,6 +44,8 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
         agent.acceleration =test;
         player = GameObject.Find("PLAYER");
 		target = GameObject.Find("REGIS_GOAL");
+		bonus = GameObject.Find("Bonus");
+
 		minIndex = index;
 
     }
@@ -53,11 +59,16 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 		
 
 
-	//know if the agent is winning or not
+		//know if the agent is winning or not
 		if (player.GetComponent<Player_Movement> ().remainingDistance < agent.remainingDistance) {
-			Debug.Log ("Player distance :" +player.GetComponent<Player_Movement> ().remainingDistance +", Agent distance"+ agent.remainingDistance+ " Agent is LOOSING");
+			Debug.Log ("Player distance :" + player.GetComponent<Player_Movement> ().remainingDistance + ", Agent distance" + agent.remainingDistance + " Agent is LOOSING");
+			if (bonus != null) {
+				tryToGetBonus = true;
+			}
+			
 		} else {
 			Debug.Log ("Player distance :" +player.GetComponent<Player_Movement> ().remainingDistance +", Agent distance"+ agent.remainingDistance+ " Agent is WINNING");
+
 
 		}
 		float distance = Vector3.Distance (transform.position, ennemies.transform.position);
@@ -69,8 +80,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 			agent.destination =newPos;
 
 		} else {
-
-			moveToPoint();
+			   moveToPoint();
 
 		}
 
@@ -87,7 +97,12 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 	private void moveToPoint ()
 	{
-		if (agent.remainingDistance < 50) {
+	    if(tryToGetBonus){
+			if (bonus != null) {
+				agent.destination = bonus.transform.position;
+			}
+			}
+		else if (agent.remainingDistance < 50) {
 			//Debug.Log("agent hasn't path");
 			index = (index + 1) % safePoints.Length;
 			if (index <= minIndex) {

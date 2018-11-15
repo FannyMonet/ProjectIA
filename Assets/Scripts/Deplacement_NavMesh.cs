@@ -107,8 +107,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 			}
 
-			//RAYCASTRIGHT
-			//RAYCAST LEFT
+		
 			if (Physics.Raycast (transform.position, transform.TransformDirection (new Vector3(-VisionArea,0,1)), out hitInfoRight, distance)) {
 
 				Debug.DrawLine (transform.position, hitInfoRight.point, Color.red);
