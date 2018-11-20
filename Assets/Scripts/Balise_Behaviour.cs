@@ -24,30 +24,42 @@ public GameObject nextBalise;
 	{
 		int i;
 		if (col.CompareTag ("Enemy")) {
-		    //Debug.Log("TOUCHE UN ENNEMI");
-				i = safePoint;
-			Regis.agent.destination = Regis.safePoints[i].position;
+			//Debug.Log("TOUCHE UN ENNEMI");
+			i = safePoint;
+			if (Regis.agent.isActiveAndEnabled)
+				Regis.agent.destination = Regis.safePoints [i].position;
 		} else if (col.CompareTag ("Player")) {
 			//Debug.Log("TOUCHE UN Player");
-			Regis.minIndex = safePoint+1;
-			Destroy (this);
+			Regis.minIndex = safePoint + 1;
+			//enabled = false;
+			//Destroy (this);
+			this.GetComponent<BoxCollider>().enabled = false;
+			if(nextBalise!=null)
+
+			nextBalise.GetComponent<BoxCollider>().enabled = true;
+
+
+			//this.gameObject.SetActive(false);
 		}
 	}
 
 	void OnTriggerStay (Collider col)
 	{
 		int i = safePoint;
-		;
 		if (col.CompareTag ("Enemy")) {
 			//Debug.Log("TOUCHE UN ENNEMI");
-			Regis.agent.destination = Regis.safePoints [i].position;
+			if(Regis.agent.isActiveAndEnabled)
+			    Regis.agent.destination = Regis.safePoints [i].position;
 		} else if (col.CompareTag ("Player")) {
 			//Debug.Log("TOUCHE UN Player");
 			Regis.minIndex = safePoint + 1;
-			if (nextBalise != null) {
-				nextBalise.SetActive (true);
-			}
-			Destroy (this);
+			this.GetComponent<BoxCollider>().enabled = false;
+			if(nextBalise!=null)
+			nextBalise.GetComponent<BoxCollider>().enabled = true;
+			//enabled = false;
+			//Destroy (this);
+			//this.enabled = false;
+
 		}
 	}
 

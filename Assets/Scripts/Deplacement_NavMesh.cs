@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Deplacement_NavMesh : MonoBehaviour {
 
 
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     private float maxSpeed;
 
     public GameObject player;
@@ -19,11 +19,8 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
     public Transform[] ennemyPattern;//The way point of the ennemy
     public int index;//index of the ennemyPattern tab
-    public Light light;//Light that will change if a player is seen
 
-	public float duration = 1.0F;
-    public Color color0 = Color.red;//Color when IA detect player
-    public Color color1 = Color.blue;//Default color
+
 
     public IA_Supervisor supervisor;//The supervisor of all IA
 
@@ -34,17 +31,25 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
     public BoxCollider boxCol;
 
+    public GameObject bullet;
+
+    public Vector3 startingPosition;
+
+    public bool isTrapped;
+
+	public int waitingTimeAtStart;
+    private int waitingTime;
 
     // Use this for initialization
     void Start () {
-
+        startingPosition = this.transform.position;
         agent = this.GetComponent<NavMeshAgent>();
-        maxSpeed = 100;
+        maxSpeed = 150;
 		agent.speed = maxSpeed;
-        agent.acceleration =100;
+        agent.acceleration =150;
 		shootCounter = shootCounterAtStart;
 		lineOfSight = this.GetComponent<LineRenderer>();
-
+		waitingTime = waitingTimeAtStart;
     }
 
 	// Update is called once per frame
@@ -53,11 +58,9 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 	//If the player is detected, follow it and change screen color
 		if (playerDetected) {
-			float t = Mathf.PingPong (Time.time, duration) / duration;
-			light.color = Color.Lerp (color0, color1, t);
 			attackPlayer ();  
 			if (shootCounter == shootCounterAtStart) {
-				//Shoot ();
+				Shoot ();
 				shootCounter--;
 			}
 			if (shootCounter < shootCounterAtStart) {
@@ -124,7 +127,18 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			}
 
 
-			moveToPoint ();
+			if (!isTrapped)
+                moveToPoint();
+            else
+            {
+                waitingTime--;
+                if (waitingTime == 0)
+                {
+                    moveToPoint();
+                    waitingTime = waitingTimeAtStart;
+                    
+                }
+}
 			//allways center the line renderer
 			lineOfSight.SetPosition(0, transform.position);
 
@@ -138,24 +152,34 @@ public class Deplacement_NavMesh : MonoBehaviour {
     {
         agent.destination = this.player.transform.position;
 
+
     }
 	//change the destination of the IA if it has reached it previous destination
 
-	private void moveToPoint ()
+	public void moveToPoint (bool reset = false)
 	{
 		if (!agent.hasPath) {
 			index = (index + 1) % ennemyPattern.Length;
 			agent.destination = ennemyPattern [index].position;
+		} else if (isTrapped) {
+			index = (index + 1) % ennemyPattern.Length;
+			agent.destination = ennemyPattern [index].position;
+			isTrapped = false;
 		}
+        else if(reset){
+                index = 0;
+				agent.destination = ennemyPattern [index].position;
+
+        }
+
 
     }
 
-	/*private void Shoot()
+	private void Shoot()
     {
-       Instantiate(bullet, transform.position, Quaternion.identity);
-
+		Instantiate(bullet,this.transform.position,Quaternion.LookRotation(player.transform.position-this.transform.position)).GetComponent<Bullet_Behaviour>().target = player ;
     }
-    */
+
 
 
 	void OnTriggerEnter (Collider col)
@@ -166,6 +190,11 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			supervisor.playerDetected = true;
 			
 		}
+		else if(col.CompareTag("Bottle") && !playerDetected)
+        {
+            isTrapped = true;
+            this.agent.destination = col.transform.position;
+}
 	}
 
 

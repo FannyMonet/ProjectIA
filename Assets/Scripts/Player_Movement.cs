@@ -6,6 +6,8 @@ using UnityEngine.AI;
 
 public class Player_Movement : MonoBehaviour {
 
+
+    public int lifePoint;
     public int speed;//Speed of the player
     public Rigidbody rgbd;//RigidBody of the player
 
@@ -24,21 +26,38 @@ public class Player_Movement : MonoBehaviour {
     public AudioSource source;//AudioSource for throwing sound
     public AudioClip clip;//Throwing sound
 
+    public IA_Supervisor supervisor;
+
+    public Vector3 StartingPos;
+
+    private int timeBeforeSpawning;
+	public int timeBeforeSpawningAtStart;
+
+
 	// Use this for initialization
 	void Start () {
+	    StartingPos = this.transform.position;
 		rgbd = gameObject.GetComponent<Rigidbody>();
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		agent.destination = target.position;//Set the destination to the end of the level
 		BottleTrajectory = GameObject.Find("BottleTrajectory");
 		lr = BottleTrajectory.GetComponent<LineRenderer>();
 		source = GetComponent<AudioSource>();
+		supervisor = GameObject.Find("IA_SUPERVISOR PLAYER L1").GetComponent<IA_Supervisor>();
+		timeBeforeSpawning = timeBeforeSpawningAtStart;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-	    //Get the remaining distance from the end of the level
-		remainingDistance = agent.remainingDistance;
+		//Get the remaining distance from the end of the level
+		if(agent.isActiveAndEnabled)
+		    remainingDistance = agent.remainingDistance;
+
+		if (lifePoint <= 0) {
+
+		RestartLevel();
+		}
 
 		//Input to use the bottle
 		if (Input.GetAxis ("RightTrigger") == -1) {
@@ -86,4 +105,50 @@ public class Player_Movement : MonoBehaviour {
 				gameObject.transform.Translate (new Vector3 (-0.1f, 0, 0) * speed);
 			}
 		}
+
+    void OnTriggerStay (Collider col)
+	{
+
+		if (col.CompareTag ("Enemy")) {
+			lifePoint--;
+			if (lifePoint == 0) {
+			Debug.Log("DEAD");
+			}
+		}
+	}
+
+	void RestartLevel ()
+	{
+		this.GetComponent<NavMeshAgent> ().enabled = false;
+		this.GetComponent<BoxCollider> ().enabled = false;
+
+
+		this.GetComponent<MeshRenderer> ().enabled = false;
+		this.GetComponent<TrailRenderer> ().enabled = false;//So that the player can't see the teleportation
+		supervisor.playerDetected = false;
+		supervisor.reset = true;
+
+
+		this.transform.position = StartingPos;
+		foreach (GameObject g in supervisor.agents) {
+			g.GetComponent<Deplacement_NavMesh> ().index = 0;
+			g.GetComponent<Deplacement_NavMesh> ().agent.SetDestination (g.GetComponent<Deplacement_NavMesh> ().ennemyPattern [g.GetComponent<Deplacement_NavMesh> ().index].position);
+
+		}
+		if (timeBeforeSpawning <= 0) {
+			this.GetComponent<NavMeshAgent>().enabled = true;
+			this.GetComponent<BoxCollider>().enabled = true;
+
+			lifePoint = 3;
+			this.GetComponent<TrailRenderer> ().enabled = true;
+			this.GetComponent<MeshRenderer> ().enabled = true;
+			timeBeforeSpawning = timeBeforeSpawningAtStart;
+			for (int i = 0; i < supervisor.agents.Length; i++) {
+			supervisor.agents[i].GetComponent<TrailRenderer>().enabled = true;
+		}
+
+		}
+		else timeBeforeSpawning--;
+
+	}
 }

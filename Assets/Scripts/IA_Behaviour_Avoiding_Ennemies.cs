@@ -11,6 +11,8 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
     public GameObject ennemies;
 
+    public int lifePoint = 3;
+
     public int test;
     private float maxSpeed;
 
@@ -33,20 +35,36 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 		public GameObject destination;
 
+		public Vector3 StartingPos;
+
+
+	private int timeBeforeSpawning;
+	public int timeBeforeSpawningAtStart;
+
+	public IA_Supervisor supervisor;
+
+	public GameObject firstBalise;
 
 
     // Use this for initialization
     void Start () {
-
+    StartingPos = this.transform.position;
         agent = this.GetComponent<NavMeshAgent>();
         maxSpeed = test;
 		agent.speed = maxSpeed;
         agent.acceleration =test;
         player = GameObject.Find("PLAYER");
-		target = GameObject.Find("REGIS_GOAL");
+		target = GameObject.Find("REGIS_GOAL L1");
 		bonus = GameObject.Find("Bonus");
 
 		minIndex = index;
+
+		timeBeforeSpawning = timeBeforeSpawningAtStart;
+
+		supervisor = GameObject.Find("IA_SUPERVISOR REGIS L1").GetComponent<IA_Supervisor>();
+
+
+
 
     }
 
@@ -55,19 +73,23 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 	{
           	
 
+		if (lifePoint <= 0) {
 
+			RestartLevel();
+			return;
+		}
 		
 
 
 		//know if the agent is winning or not
 		if (player.GetComponent<Player_Movement> ().remainingDistance < agent.remainingDistance) {
-			Debug.Log ("Player distance :" + player.GetComponent<Player_Movement> ().remainingDistance + ", Agent distance" + agent.remainingDistance + " Agent is LOOSING");
+			//Debug.Log ("Player distance :" + player.GetComponent<Player_Movement> ().remainingDistance + ", Agent distance" + agent.remainingDistance + " Agent is LOOSING");
 			if (bonus != null) {
 				tryToGetBonus = true;
 			}
 			
 		} else {
-			Debug.Log ("Player distance :" +player.GetComponent<Player_Movement> ().remainingDistance +", Agent distance"+ agent.remainingDistance+ " Agent is WINNING");
+			//Debug.Log ("Player distance :" +player.GetComponent<Player_Movement> ().remainingDistance +", Agent distance"+ agent.remainingDistance+ " Agent is WINNING");
 
 
 		}
@@ -97,12 +119,14 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 	private void moveToPoint ()
 	{
-	    if(tryToGetBonus){
+		if (tryToGetBonus) {
 			if (bonus != null) {
 				agent.destination = bonus.transform.position;
 			}
+		} else if (agent.remainingDistance < 50) {
+			if (index == safePoints.Length) {
+			    return;
 			}
-		else if (agent.remainingDistance < 50) {
 			//Debug.Log("agent hasn't path");
 			index = (index + 1) % safePoints.Length;
 			if (index <= minIndex) {
@@ -121,6 +145,42 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 	}
 	}
 
+	void RestartLevel ()
+	{
+		this.GetComponent<MeshRenderer> ().enabled = false;
+		this.GetComponent<TrailRenderer> ().enabled = false;//So that the player can't see the teleportation
+		supervisor.playerDetected = false;
+		supervisor.reset = true;
+		this.transform.position = StartingPos;
+		this.GetComponent<NavMeshAgent>().enabled = false;
+		foreach (GameObject g in supervisor.agents) {
+			g.GetComponent<Deplacement_NavMesh> ().index = 0;
+			g.GetComponent<Deplacement_NavMesh> ().agent.SetDestination (g.GetComponent<Deplacement_NavMesh> ().ennemyPattern [g.GetComponent<Deplacement_NavMesh> ().index].position);
 
+		}
+		GameObject[] balises = GameObject.FindGameObjectsWithTag ("Balise");
+		foreach (GameObject b in balises) {
+			foreach (Collider other in b.GetComponents<BoxCollider>()) {
+			   other.enabled = false;
+			}
+		}
+		if (timeBeforeSpawning <= 0) {
+			this.GetComponent<NavMeshAgent>().enabled = true;
+
+
+			this.GetComponent<TrailRenderer> ().enabled = true;
+			this.GetComponent<MeshRenderer> ().enabled = true;
+			timeBeforeSpawning = timeBeforeSpawningAtStart;
+			firstBalise.SetActive(true);
+			foreach (Collider other in firstBalise.GetComponents<BoxCollider>()) {
+			   other.enabled = true;
+			}
+			index = minIndex;
+			lifePoint = 3;
+
+		}
+		else timeBeforeSpawning--;
+
+	}
 
     }

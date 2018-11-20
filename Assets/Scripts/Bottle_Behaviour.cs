@@ -10,21 +10,24 @@ public class Bottle_Behaviour : MonoBehaviour {
 	private int destroyingTimer;//the time before explosion
 	public AudioClip clip;//Bottle breaking sound
 	public AudioSource source;//Audio SOurce
-
+	public SphereCollider collider;
 	// Use this for initialization
 	void Start () {
-		destroyingTimer = 30;
+		destroyingTimer = 20;
 		source = GetComponent<AudioSource>();
+		collider = GetComponent<SphereCollider>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		if(collider.radius < 4)
+            collider.radius += 0.13f;
 		destroyingTimer--;
 		if (destroyingTimer == 0) {
 			DestroyProjectile ();
 		}
-		}
+}
 	
 
 	void DestroyProjectile ()

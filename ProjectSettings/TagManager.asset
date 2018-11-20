@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Balise
+  - Wall
+  - Bottle
+  - PointBonus
   layers:
   - Default
   - TransparentFX
