@@ -29,7 +29,7 @@ public GameObject startingPosition;
 		startingPosition =GameObject.Find(playerPositionAtStart);
 		light = GameObject.Find("LIGHT").GetComponent<Light>();
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{

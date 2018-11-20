@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bottle_Behaviour : MonoBehaviour {
 
- 
+
 	public GameObject explosion;//the explosion particule
 	public Vector3 target;//the position where the explosion append
 	private int destroyingTimer;//the time before explosion
@@ -17,7 +17,7 @@ public class Bottle_Behaviour : MonoBehaviour {
 		source = GetComponent<AudioSource>();
 		collider = GetComponent<SphereCollider>();
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -28,7 +28,7 @@ public class Bottle_Behaviour : MonoBehaviour {
 			DestroyProjectile ();
 		}
 }
-	
+
 
 	void DestroyProjectile ()
 	{

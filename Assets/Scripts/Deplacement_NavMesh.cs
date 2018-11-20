@@ -58,7 +58,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 	//If the player is detected, follow it and change screen color
 		if (playerDetected) {
-			attackPlayer ();  
+			attackPlayer ();
 			if (shootCounter == shootCounterAtStart) {
 				Shoot ();
 				shootCounter--;
@@ -70,9 +70,9 @@ public class Deplacement_NavMesh : MonoBehaviour {
 				}
 			}
 		} else {
-			RaycastHit hitInfoCenter; 
-			RaycastHit hitInfoLeft; 
-			RaycastHit hitInfoRight; 
+			RaycastHit hitInfoCenter;
+			RaycastHit hitInfoLeft;
+			RaycastHit hitInfoRight;
 
 
 			//RAYCAST CENTER
@@ -110,7 +110,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 			}
 
-		
+
 			if (Physics.Raycast (transform.position, transform.TransformDirection (new Vector3(-VisionArea,0,1)), out hitInfoRight, distance)) {
 
 				Debug.DrawLine (transform.position, hitInfoRight.point, Color.red);
@@ -136,7 +136,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
                 {
                     moveToPoint();
                     waitingTime = waitingTimeAtStart;
-                    
+
                 }
 }
 			//allways center the line renderer
@@ -188,7 +188,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			this.GetComponent<AudioSource> ().PlayOneShot (this.GetComponent<AudioSource> ().clip);
 			this.player = col.gameObject;
 			supervisor.playerDetected = true;
-			
+
 		}
 		else if(col.CompareTag("Bottle") && !playerDetected)
         {

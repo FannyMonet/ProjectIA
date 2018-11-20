@@ -46,7 +46,7 @@ public class Player_Movement : MonoBehaviour {
 		supervisor = GameObject.Find("IA_SUPERVISOR PLAYER L1").GetComponent<IA_Supervisor>();
 		timeBeforeSpawning = timeBeforeSpawningAtStart;
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
