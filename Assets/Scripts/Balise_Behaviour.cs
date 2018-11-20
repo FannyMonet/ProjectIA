@@ -13,10 +13,10 @@ public GameObject nextBalise;
 	void Start () {
 		Regis = GameObject.Find("REGIS").GetComponent<IA_Behaviour_Avoiding_Ennemies>();
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
-
+		
 	}
 
 

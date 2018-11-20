@@ -71,14 +71,14 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-
+          	
 
 		if (lifePoint <= 0) {
 
 			RestartLevel();
 			return;
 		}
-
+		
 
 
 		//know if the agent is winning or not
@@ -87,7 +87,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 			if (bonus != null) {
 				tryToGetBonus = true;
 			}
-
+			
 		} else {
 			//Debug.Log ("Player distance :" +player.GetComponent<Player_Movement> ().remainingDistance +", Agent distance"+ agent.remainingDistance+ " Agent is WINNING");
 
@@ -133,7 +133,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 				index = minIndex;
 			}
 			agent.destination = safePoints[index].position;
-		}
+		} 
 
 
     }
