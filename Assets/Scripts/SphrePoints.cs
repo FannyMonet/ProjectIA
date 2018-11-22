@@ -32,7 +32,7 @@ public class SphrePoints : MonoBehaviour {
 				took = true;
 			}
 			GameObject explosionPrefab = Instantiate (explosion, transform.position, Quaternion.identity, this.transform);
-		    Destroy (gameObject,0.3f);
+		    Destroy (gameObject,0.4f);
 		}
 	}
 }

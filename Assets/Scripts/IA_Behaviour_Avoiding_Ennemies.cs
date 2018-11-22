@@ -45,6 +45,11 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 	public GameObject firstBalise;
 
+	public int timerBonus;
+
+	public int indexBonusMax;
+	public GameObject[] bonusSpawners;
+
 
     // Use this for initialization
     void Start () {
@@ -55,7 +60,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
         agent.acceleration =test;
         player = GameObject.Find("PLAYER");
 		target = GameObject.Find("REGIS_GOAL L1");
-		bonus = GameObject.Find("Bonus");
+		bonus = bonusSpawners[0];
 
 		minIndex = index;
 
@@ -74,15 +79,24 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
           	
 
 		if (lifePoint <= 0) {
-
+			CancelBonus ();
 			RestartLevel();
 			return;
+		}
+
+		//Bonus Timer
+		if (timerBonus >= 0) {
+			if (timerBonus == 0) {
+				CancelBonus ();
+		
+			}
+			timerBonus--;
 		}
 		
 
 
 		//know if the agent is winning or not
-		if (player.GetComponent<Player_Movement> ().remainingDistance < agent.remainingDistance) {
+		if (player.GetComponent<Player_Movement> ().remainingDistance < agent.remainingDistance && minIndex< indexBonusMax) {
 			//Debug.Log ("Player distance :" + player.GetComponent<Player_Movement> ().remainingDistance + ", Agent distance" + agent.remainingDistance + " Agent is LOOSING");
 			if (bonus != null) {
 				tryToGetBonus = true;
@@ -177,10 +191,19 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 			}
 			index = minIndex;
 			lifePoint = 3;
+			CancelBonus();
 
 		}
 		else timeBeforeSpawning--;
 
+	}
+
+	void CancelBonus ()
+	{
+			
+			this.transform.localScale = new Vector3 (25, 25, 25);
+			this.agent.speed = test;
+		    this.agent.acceleration = test;
 	}
 
     }

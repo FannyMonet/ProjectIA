@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Bottle
   - PointBonus
+  - Bonus
   layers:
   - Default
   - TransparentFX

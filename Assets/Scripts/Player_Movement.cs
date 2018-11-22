@@ -33,6 +33,9 @@ public class Player_Movement : MonoBehaviour {
     private int timeBeforeSpawning;
 	public int timeBeforeSpawningAtStart;
 
+	public int timerBonus;
+
+	public bool bonusSpeedUp;
 
 	// Use this for initialization
 	void Start () {
@@ -51,12 +54,21 @@ public class Player_Movement : MonoBehaviour {
 	void Update ()
 	{
 		//Get the remaining distance from the end of the level
-		if(agent.isActiveAndEnabled)
-		    remainingDistance = agent.remainingDistance;
+		if (agent.isActiveAndEnabled)
+			remainingDistance = agent.remainingDistance;
 
 		if (lifePoint <= 0) {
+		    CancelBonus();
+			RestartLevel ();
+		}
 
-		RestartLevel();
+		//Bonus Timer
+		if (timerBonus >= 0) {
+			if (timerBonus == 0) {
+				CancelBonus ();
+		
+			}
+			timerBonus--;
 		}
 
 		//Input to use the bottle
@@ -93,6 +105,15 @@ public class Player_Movement : MonoBehaviour {
 	//Movement
 	void FixedUpdate ()
 	{
+		if (bonusSpeedUp) {
+			float t = Mathf.PingPong (Time.time, 300) / 300;
+			int rand = Random.Range(-1,2);
+
+			float h = t*rand + (Input.GetAxis ("Horizontal")-0.3f);
+			float v = t*rand +(Input.GetAxis ("Vertical")-0.3f);
+			gameObject.transform.Translate (new Vector3 (h, 0, v) * speed);
+		} else {
+
 			if (Input.GetAxis ("Vertical") > 0.01f) {
 				gameObject.transform.Translate (new Vector3 (0, 0, 0.1f) * speed);
 			} else if (Input.GetAxis ("Vertical") < -0.01f) {
@@ -105,6 +126,7 @@ public class Player_Movement : MonoBehaviour {
 				gameObject.transform.Translate (new Vector3 (-0.1f, 0, 0) * speed);
 			}
 		}
+	}
 
     void OnTriggerStay (Collider col)
 	{
@@ -145,10 +167,19 @@ public class Player_Movement : MonoBehaviour {
 			timeBeforeSpawning = timeBeforeSpawningAtStart;
 			for (int i = 0; i < supervisor.agents.Length; i++) {
 			supervisor.agents[i].GetComponent<TrailRenderer>().enabled = true;
+			CancelBonus();
 		}
 
 		}
 		else timeBeforeSpawning--;
 
+	}
+
+	void CancelBonus ()
+	{
+			this.transform.localScale = new Vector3 (25, 25, 25);
+			speed = 35;
+			bonusSpeedUp = false;
+		
 	}
 }

@@ -26,7 +26,7 @@ public class Bullet_Behaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		this.transform.position +=transform.forward*speed*Time.deltaTime;
+		this.transform.position +=transform.forward*speed*2*Time.deltaTime;
 	}
 
 

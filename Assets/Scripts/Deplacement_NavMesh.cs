@@ -158,6 +158,8 @@ public class Deplacement_NavMesh : MonoBehaviour {
 
 	public void moveToPoint (bool reset = false)
 	{
+	if(this.name.Equals("IA_JUNIOR V2.0"))
+	    Debug.Log( this.name +" index : "+index);
 		if (!agent.hasPath) {
 			index = (index + 1) % ennemyPattern.Length;
 			agent.destination = ennemyPattern [index].position;
@@ -169,6 +171,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
         else if(reset){
                 index = 0;
 				agent.destination = ennemyPattern [index].position;
+			    //this.GetComponent<BoxCollider>().enabled = true;
 
         }
 

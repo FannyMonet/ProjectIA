@@ -35,7 +35,7 @@ public GameObject startingPosition;
 	{
 		//if the player is detected, every IA knows it
 		if (playerDetected) {
-		Debug.Log("Player Detected!");
+		//Debug.Log("Player Detected!");
 			float t = Mathf.PingPong (Time.time, duration) / duration;
 			light.color = Color.Lerp (color0, color1, t);
 			for (int i = 0; i < agents.Length; i++) {
@@ -58,6 +58,7 @@ public GameObject startingPosition;
 				agents [i].GetComponent<Deplacement_NavMesh> ().playerDetected = false;
 				agents [i].GetComponent<TrailRenderer> ().startColor = color1;
 				agents [i].GetComponent<LineRenderer> ().enabled = true;
+				//agents [i].GetComponent<BoxCollider>().enabled = false;
 
 
 			}

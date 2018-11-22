@@ -17,6 +17,8 @@ public class MoveCamera : MonoBehaviour {
     public string[] supervisorNames;
 	public string[] baliseName;
 
+	public int minIndex;
+
 
 	// Use this for initialization
 	void Start () {
@@ -63,6 +65,7 @@ public class MoveCamera : MonoBehaviour {
 						regis.supervisor = GameObject.Find (supervisorNames [1]).GetComponent<IA_Supervisor> ();
 						regis.firstBalise = GameObject.Find (baliseName [1]);
 						regis.StartingPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z + 30);
+						regis.minIndex = this.minIndex; 
 
 					} else {
 						regis.supervisor = GameObject.Find (supervisorNames [0]).GetComponent<IA_Supervisor> ();
@@ -92,8 +95,21 @@ public class MoveCamera : MonoBehaviour {
 
 					}
 				}
+				//Player_Movement player = col.GetComponent<Player_Movement> ();
+				player.supervisor.playerDetected = false;
+
+				player.supervisor.reset = true;
 
 		    }
+		}
+	}
+
+	void OnTriggerExit (Collider col)
+	{
+		if (col.transform.position.z > this.transform.position.z && !levelUp) {
+			OnTriggerEnter (col);
+		} else if (col.transform.position.z < this.transform.position.z && levelUp) {
+		    OnTriggerEnter (col);
 		}
 	}
 }
