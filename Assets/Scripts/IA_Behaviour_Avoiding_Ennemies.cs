@@ -206,11 +206,18 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 	}
 
 	void CancelBonus ()
-	{
-			
-			this.transform.localScale = new Vector3 (25, 25, 25);
-			this.agent.speed = test;
-		    this.agent.acceleration = test;
-	}
+	{	
+		this.transform.localScale = new Vector3 (25, 25, 25);
+		this.agent.speed = test;
+		this.agent.acceleration = test;
+        foreach (GameObject agent in this.supervisor.agents)
+        {
+            agent.GetComponent<Deplacement_NavMesh>().distance = 230;
+            agent.GetComponent<Deplacement_NavMesh>().VisionArea = 0.26f;
+            agent.GetComponent<LineRenderer>().endWidth = 100;
+            agent.GetComponent<NavMeshAgent>().speed = 130;
+            agent.GetComponent<NavMeshAgent>().acceleration = 130;
+        }
+    }
 
     }

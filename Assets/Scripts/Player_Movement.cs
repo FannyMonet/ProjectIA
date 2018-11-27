@@ -177,9 +177,16 @@ public class Player_Movement : MonoBehaviour {
 
 	void CancelBonus ()
 	{
-			this.transform.localScale = new Vector3 (25, 25, 25);
-			speed = 35;
-			bonusSpeedUp = false;
-		
-	}
+		this.transform.localScale = new Vector3 (25, 25, 25);
+		speed = 35;
+		bonusSpeedUp = false;
+        foreach (GameObject agent in this.supervisor.agents)
+        {
+            agent.GetComponent<Deplacement_NavMesh>().distance = 200;
+            agent.GetComponent<Deplacement_NavMesh>().VisionArea = 0.26f;
+            agent.GetComponent<LineRenderer>().endWidth = 100;
+            agent.GetComponent<NavMeshAgent>().speed = 130;
+            agent.GetComponent<NavMeshAgent>().acceleration = 130;
+        }
+    }
 }
