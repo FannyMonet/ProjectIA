@@ -28,6 +28,7 @@ public class BonusSpeed : MonoBehaviour {
 				player.speed = 0;
 				player.timerBonus = 300;
 				Regis.tryToGetBonus = false;
+				Regis.bonus = null;
 				DecrementScore("Regis");
 				Destroy (gameObject);
 			} else if (col.name.Equals ("PLAYER")) {

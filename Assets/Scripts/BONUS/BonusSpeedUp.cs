@@ -23,6 +23,7 @@ public class BonusSpeedUp : MonoBehaviour {
 			    player.bonusSpeedUp = true;
 				player.timerBonus = 300;
 				Regis.tryToGetBonus = false;
+				Regis.bonus = null;
 				Destroy (gameObject);
 			} else if (col.name.Equals ("PLAYER")) {
 			    

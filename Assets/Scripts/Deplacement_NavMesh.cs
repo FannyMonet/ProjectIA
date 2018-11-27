@@ -98,7 +98,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			if (Physics.Raycast (transform.position, transform.TransformDirection (new Vector3(VisionArea,0,1)), out hitInfoLeft, distance)) {
 
 				Debug.DrawLine (transform.position, hitInfoLeft.point, Color.red);
-				lineOfSight.SetPosition (1, hitInfoCenter.point);
+				//lineOfSight.SetPosition (1, hitInfoCenter.point);
 				if (hitInfoLeft.collider.CompareTag ("Player")) {
 					this.GetComponent<AudioSource> ().PlayOneShot (this.GetComponent<AudioSource> ().clip);
 					supervisor.playerDetected = true;
@@ -106,7 +106,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			}
 			else {
 				Debug.DrawLine (transform.position, transform.position + transform.TransformDirection(new Vector3(VisionArea,0,1)) * distance, Color.green);
-				lineOfSight.SetPosition(1, transform.position + transform.TransformDirection(new Vector3(VisionArea,0,1)) * distance);
+				//lineOfSight.SetPosition(1, transform.position + transform.TransformDirection(new Vector3(VisionArea,0,1)) * distance);
 
 			}
 
@@ -114,7 +114,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			if (Physics.Raycast (transform.position, transform.TransformDirection (new Vector3(-VisionArea,0,1)), out hitInfoRight, distance)) {
 
 				Debug.DrawLine (transform.position, hitInfoRight.point, Color.red);
-				lineOfSight.SetPosition (1, hitInfoCenter.point);
+				//lineOfSight.SetPosition (1, hitInfoCenter.point);
 				if (hitInfoRight.collider.CompareTag ("Player")) {
 					this.GetComponent<AudioSource> ().PlayOneShot (this.GetComponent<AudioSource> ().clip);
 					supervisor.playerDetected = true;
@@ -122,7 +122,7 @@ public class Deplacement_NavMesh : MonoBehaviour {
 			}
 			else {
 				Debug.DrawLine (transform.position, transform.position + transform.TransformDirection(new Vector3(-VisionArea,0,1)) * distance, Color.green);
-				lineOfSight.SetPosition(1, transform.position + transform.TransformDirection(new Vector3(-VisionArea,0,1)) * distance);
+				//lineOfSight.SetPosition(1, transform.position + transform.TransformDirection(new Vector3(-VisionArea,0,1)) * distance);
 
 			}
 

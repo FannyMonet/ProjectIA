@@ -19,6 +19,8 @@ public class MoveCamera : MonoBehaviour {
 
 	public int minIndex;
 
+	public int bonusNumber;
+
 
 	// Use this for initialization
 	void Start () {
@@ -55,6 +57,8 @@ public class MoveCamera : MonoBehaviour {
 				regis.supervisor.playerDetected = false;
 
 				regis.supervisor.reset = true;
+
+				regis.bonus = regis.bonusSpawners[bonusNumber];
 
 
 				if (regis.lifePoint > 0) {

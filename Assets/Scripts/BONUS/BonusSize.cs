@@ -24,6 +24,7 @@ public class BonusSize : MonoBehaviour {
 				player.gameObject.transform.localScale = new Vector3 (50, 50, 50);
 				player.timerBonus = 300;
 				Regis.tryToGetBonus = false;
+				Regis.bonus = null;
 				Destroy (gameObject);
 			} else if (col.name.Equals ("PLAYER")) {
 				Regis.gameObject.transform.localScale = new Vector3 (50, 50, 50);

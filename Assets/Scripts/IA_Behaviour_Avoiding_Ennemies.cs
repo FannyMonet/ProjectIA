@@ -50,16 +50,23 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 	public int indexBonusMax;
 	public GameObject[] bonusSpawners;
 
+	public int acceleration;
+
+    public int speed;
+
+    public int angleSpeed;
+
 
     // Use this for initialization
     void Start () {
     StartingPos = this.transform.position;
         agent = this.GetComponent<NavMeshAgent>();
         maxSpeed = test;
-		agent.speed = maxSpeed;
-        agent.acceleration =test;
+		agent.speed = speed;
+        agent.acceleration =acceleration;
+        agent.angularSpeed = angleSpeed;
         player = GameObject.Find("PLAYER");
-		target = GameObject.Find("REGIS_GOAL L1");
+		target = GameObject.Find("REGIS_GOAL_1");
 		bonus = bonusSpawners[0];
 
 		minIndex = index;
