@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using System;
+using UnityEngine.UI;
+//using UnityEngine.PostProcessing;
+
 
 
 public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 	public NavMeshAgent agent;
+
+	public Text[] texts;
+
+
+	//public PostProcessingProfile ppp;
 
     public GameObject ennemies;
 
@@ -20,7 +27,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
     public int EnemyDistanceRun;
 
-    public GameObject target;
+    public Transform target;
 
 	public GameObject bonus;
 
@@ -56,6 +63,11 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
     public int angleSpeed;
 
+	public int level;
+
+	public int score;
+
+
 
     // Use this for initialization
     void Start () {
@@ -66,7 +78,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
         agent.acceleration =acceleration;
         agent.angularSpeed = angleSpeed;
         player = GameObject.Find("PLAYER");
-		target = GameObject.Find("REGIS_GOAL_1");
+		target = GameObject.Find("REGIS_GOAL_1").transform;
 		bonus = bonusSpawners[0];
 
 		minIndex = index;
@@ -84,7 +96,9 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 	void Update ()
 	{
           	
-
+		foreach (Text text in texts) {
+		    text.text = score.ToString();
+		}
 		if (lifePoint <= 0) {
 			CancelBonus ();
 			RestartLevel();
@@ -101,16 +115,19 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 		}
 		
 
-
+		float distancePlayer = Vector3.Distance(player.transform.position, player.GetComponent<Player_Movement> ().target.position) + player.GetComponent<Player_Movement> ().level *-1000;
+		float distanceRegis = Vector3.Distance( this.transform.position, this.target.transform.position) + level*-1000;
 		//know if the agent is winning or not
-		if (player.GetComponent<Player_Movement> ().remainingDistance < agent.remainingDistance && minIndex< indexBonusMax) {
-			//Debug.Log ("Player distance :" + player.GetComponent<Player_Movement> ().remainingDistance + ", Agent distance" + agent.remainingDistance + " Agent is LOOSING");
+		if (distanceRegis >distancePlayer)
+		{ //&& minIndex< indexBonusMax) {
+			Debug.Log ("Player distance :" + distancePlayer + ", Agent distance" + distanceRegis + " Agent is LOOSING");
 			if (bonus != null) {
 				tryToGetBonus = true;
 			}
 			
 		} else {
-			//Debug.Log ("Player distance :" +player.GetComponent<Player_Movement> ().remainingDistance +", Agent distance"+ agent.remainingDistance+ " Agent is WINNING");
+			Debug.Log ("Player distance :" + distancePlayer +", Agent distance"+ distanceRegis+ " Agent is WINNING");
+			tryToGetBonus = false;
 
 
 		}
@@ -155,6 +172,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 			}
 			agent.destination = safePoints[index].position;
 		} 
+		else agent.destination = safePoints[index].position;
 
 
     }
@@ -172,6 +190,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 		this.GetComponent<TrailRenderer> ().enabled = false;//So that the player can't see the teleportation
 		supervisor.playerDetected = false;
 		supervisor.reset = true;
+		tryToGetBonus = false;
 		this.transform.position = StartingPos;
 		this.GetComponent<NavMeshAgent>().enabled = false;
 		foreach (GameObject g in supervisor.agents) {
@@ -196,6 +215,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 			foreach (Collider other in firstBalise.GetComponents<BoxCollider>()) {
 			   other.enabled = true;
 			}
+			minIndex = firstBalise.GetComponent<Balise_Behaviour>().safePoint;
 			index = minIndex;
 			lifePoint = 3;
 			CancelBonus();
@@ -211,6 +231,15 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 			this.transform.localScale = new Vector3 (25, 25, 25);
 			this.agent.speed = test;
 		    this.agent.acceleration = test;
+		    foreach(GameObject agent in this.supervisor.agents)
+                {
+                    agent.GetComponent<Deplacement_NavMesh>().distance = 200;
+                    agent.GetComponent<Deplacement_NavMesh>().VisionArea = 0.26f;
+                    agent.GetComponent<LineRenderer>().endWidth = 100;
+                    agent.GetComponent<NavMeshAgent>().speed = 150;
+			        agent.GetComponent<NavMeshAgent>().acceleration = 150;
+
+                }
 	}
 
     }

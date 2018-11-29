@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class SphrePoints : MonoBehaviour {
 
-    public Text[] points;
     private AudioSource audio;
     public bool took;
     public GameObject explosion;
@@ -23,12 +22,13 @@ public class SphrePoints : MonoBehaviour {
 
 			if (!took) {
 				audio.Play ();
-				int score = int.Parse (points [0].text.ToString ());
-				score += 100;
-				for (int i = 0; i < points.Length; i++) {
 
-					points [i].text = score.ToString ();
-				}
+				if(col.name.Equals("PLAYER"))
+				    col.GetComponent<Player_Movement>().score+=100;
+				else 
+				col.GetComponent<IA_Behaviour_Avoiding_Ennemies>().score += 100;
+
+
 				took = true;
 			}
 			GameObject explosionPrefab = Instantiate (explosion, transform.position, Quaternion.identity, this.transform);

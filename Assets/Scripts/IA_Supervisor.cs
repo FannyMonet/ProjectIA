@@ -35,7 +35,15 @@ public GameObject startingPosition;
 	{
 		//if the player is detected, every IA knows it
 		if (playerDetected) {
-		//Debug.Log("Player Detected!");
+			//Debug.Log("Player Detected!");
+			if (player.name.Equals ("REGIS")) {
+				if (player.GetComponent<IA_Behaviour_Avoiding_Ennemies> ().score > 0)
+					player.GetComponent<IA_Behaviour_Avoiding_Ennemies> ().score--;
+			} else if (player.name.Equals ("PLAYER")) {
+				if (player.GetComponent<Player_Movement> ().score > 0)
+				player.GetComponent<Player_Movement> ().score--;
+			}
+
 			float t = Mathf.PingPong (Time.time, duration) / duration;
 			light.color = Color.Lerp (color0, color1, t);
 			for (int i = 0; i < agents.Length; i++) {

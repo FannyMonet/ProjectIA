@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
+//using UnityEngine.PostProcessing;
 
 public class Player_Movement : MonoBehaviour {
 
@@ -10,6 +12,11 @@ public class Player_Movement : MonoBehaviour {
     public int lifePoint;
     public int speed;//Speed of the player
     public Rigidbody rgbd;//RigidBody of the player
+
+    public Text[] texts;
+    //public PostProcessingProfile ppp;
+
+    //public PostProcessingProfile ppp;
 
     public Transform target;//The end of the level
     public NavMeshAgent agent;//The agent of the player, allows to know how far he is from the end of the level
@@ -37,8 +44,13 @@ public class Player_Movement : MonoBehaviour {
 
 	public bool bonusSpeedUp;
 
+	public int level;
+
+	public int score;
+
 	// Use this for initialization
 	void Start () {
+	    level = 0;
 	    StartingPos = this.transform.position;
 		rgbd = gameObject.GetComponent<Rigidbody>();
 		agent = gameObject.GetComponent<NavMeshAgent>();
@@ -53,6 +65,9 @@ public class Player_Movement : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+		foreach (Text text in texts) {
+		    text.text = score.ToString();
+		}
 		//Get the remaining distance from the end of the level
 		if (agent.isActiveAndEnabled)
 			remainingDistance = agent.remainingDistance;
@@ -173,6 +188,7 @@ public class Player_Movement : MonoBehaviour {
 		}
 		else timeBeforeSpawning--;
 
+
 	}
 
 	void CancelBonus ()
@@ -180,6 +196,15 @@ public class Player_Movement : MonoBehaviour {
 			this.transform.localScale = new Vector3 (25, 25, 25);
 			speed = 35;
 			bonusSpeedUp = false;
+		    foreach(GameObject agent in this.supervisor.agents)
+                {
+                    agent.GetComponent<Deplacement_NavMesh>().distance = 200;
+                    agent.GetComponent<Deplacement_NavMesh>().VisionArea = 0.26f;
+                    agent.GetComponent<LineRenderer>().endWidth = 100;
+                    agent.GetComponent<NavMeshAgent>().speed = 150;
+			        agent.GetComponent<NavMeshAgent>().acceleration = 150;
+
+                }
 		
 	}
 }

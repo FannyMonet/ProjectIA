@@ -22,21 +22,23 @@ public GameObject nextBalise;
 
 	void OnTriggerEnter (Collider col)
 	{
-		int i;
+		int i = safePoint;
 		if (col.CompareTag ("Enemy")) {
 			//Debug.Log("TOUCHE UN ENNEMI");
-			i = safePoint;
-			if (Regis.agent.isActiveAndEnabled)
+			if (Regis.agent.isActiveAndEnabled)//&& !Regis.tryToGetBonus)
 				Regis.agent.destination = Regis.safePoints [i].position;
 		} else if (col.CompareTag ("Player")) {
 			//Debug.Log("TOUCHE UN Player");
 			Regis.minIndex = safePoint + 1;
 			//enabled = false;
 			//Destroy (this);
-			this.GetComponent<BoxCollider>().enabled = false;
-			if(nextBalise!=null)
+			foreach (BoxCollider colider in this.GetComponents<BoxCollider>())
+				colider.enabled = false;
+			if (nextBalise != null) {
 
-			nextBalise.GetComponent<BoxCollider>().enabled = true;
+				foreach (BoxCollider colider in nextBalise.GetComponents<BoxCollider>())
+					colider.enabled = true;
+			}
 
 
 			//this.gameObject.SetActive(false);
@@ -48,14 +50,18 @@ public GameObject nextBalise;
 		int i = safePoint;
 		if (col.CompareTag ("Enemy")) {
 			//Debug.Log("TOUCHE UN ENNEMI");
-			if(Regis.agent.isActiveAndEnabled)
+			if(Regis.agent.isActiveAndEnabled)// && !Regis.tryToGetBonus)
 			    Regis.agent.destination = Regis.safePoints [i].position;
 		} else if (col.CompareTag ("Player")) {
 			//Debug.Log("TOUCHE UN Player");
 			Regis.minIndex = safePoint + 1;
-			this.GetComponent<BoxCollider>().enabled = false;
-			if(nextBalise!=null)
-			nextBalise.GetComponent<BoxCollider>().enabled = true;
+			foreach(BoxCollider colider in this.GetComponents<BoxCollider>())
+			    colider.enabled = false;
+			if (nextBalise != null) {
+
+				foreach (BoxCollider colider in nextBalise.GetComponents<BoxCollider>())
+					colider.enabled = true;
+			}
 			//enabled = false;
 			//Destroy (this);
 			//this.enabled = false;

@@ -21,6 +21,12 @@ public class MoveCamera : MonoBehaviour {
 
 	public int bonusNumber;
 
+	public int transitionBetween;
+
+	public Vector3[] targets;
+
+	public Transform[] ChangingTarget;
+
 
 	// Use this for initialization
 	void Start () {
@@ -52,6 +58,8 @@ public class MoveCamera : MonoBehaviour {
 			if (col.name.Equals ("REGIS")) {
 				itsMe_Regis = true;
 
+
+
 				IA_Behaviour_Avoiding_Ennemies regis = col.GetComponent<IA_Behaviour_Avoiding_Ennemies> ();
 
 				regis.supervisor.playerDetected = false;
@@ -61,17 +69,30 @@ public class MoveCamera : MonoBehaviour {
 				regis.bonus = regis.bonusSpawners[bonusNumber];
 
 
+
+
+
 				if (regis.lifePoint > 0) {
 					gateReached = true;
 
 
 					if (levelUp) {
+						regis.level = transitionBetween;
+
+						regis.target = ChangingTarget[1];
+					    regis.agent.destination = targets[1];
 						regis.supervisor = GameObject.Find (supervisorNames [1]).GetComponent<IA_Supervisor> ();
 						regis.firstBalise = GameObject.Find (baliseName [1]);
 						regis.StartingPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z + 30);
 						regis.minIndex = this.minIndex; 
 
 					} else {
+						regis.target = ChangingTarget[0];
+
+						regis.level = transitionBetween-1;
+
+						regis.agent.destination = targets[0];
+
 						regis.supervisor = GameObject.Find (supervisorNames [0]).GetComponent<IA_Supervisor> ();
 						//regis.firstBalise = GameObject.Find (baliseName [0]);
 						regis.StartingPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - 30);
@@ -85,17 +106,30 @@ public class MoveCamera : MonoBehaviour {
 				player.supervisor.reset = true;
 
 
+
+
 				if (player.lifePoint > 0) {
 					gateReached = true;
 
 
 					if (levelUp) {
+					    player.level = transitionBetween;
+					    player.target = ChangingTarget[1];
+						player.agent.destination = targets[1];
+
 						player.supervisor = GameObject.Find (supervisorNames [1]).GetComponent<IA_Supervisor> ();
-						player.StartingPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z + 30);
+						player.StartingPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z + 80);
 
 					} else {
+
+						player.target = ChangingTarget[0];
+
+						player.level = transitionBetween-1;
+
+						player.agent.destination = targets[0];
+
 						player.supervisor = GameObject.Find (supervisorNames [0]).GetComponent<IA_Supervisor> ();
-						player.StartingPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - 30);
+						player.StartingPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z - 80);
 
 					}
 				}
@@ -110,10 +144,12 @@ public class MoveCamera : MonoBehaviour {
 
 	void OnTriggerExit (Collider col)
 	{
-		if (col.transform.position.z > this.transform.position.z && !levelUp) {
-			OnTriggerEnter (col);
-		} else if (col.transform.position.z < this.transform.position.z && levelUp) {
-		    OnTriggerEnter (col);
+		if (col.CompareTag ("Player")) {
+			if (col.transform.position.z > this.transform.position.z && !levelUp) {
+				OnTriggerEnter (col);
+			} else if (col.transform.position.z < this.transform.position.z && levelUp) {
+				OnTriggerEnter (col);
+			}
 		}
 	}
 }
