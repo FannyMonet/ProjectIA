@@ -12,7 +12,7 @@ NavMeshProjectSettings:
   - name: Jump
     cost: 2
   - name: Terrain
-    cost: 0
+    cost: 1
   - name: IA
     cost: 1
   - name: 

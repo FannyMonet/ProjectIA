@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,8 +13,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 	public Text[] texts;
 
-
-	//public PostProcessingProfile ppp;
+	public Text bonusText;
 
     public GameObject ennemies;
 
@@ -39,8 +38,10 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
     public bool tryToGetBonus;
 
+    public bool isWinning;
 
-		public GameObject destination;
+
+		public GameObject objectif;
 
 		public Vector3 StartingPos;
 
@@ -67,6 +68,8 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 	public int score;
 
+	public bool bonusTook;//to know if the IA took the bonus of the level
+
 
 
     // Use this for initialization
@@ -87,6 +90,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
 		supervisor = GameObject.Find("IA_SUPERVISOR REGIS L1").GetComponent<IA_Supervisor>();
 
+		bonusText = GameObject.Find("BonusTextR").GetComponent<Text>();
 
 
 
@@ -97,11 +101,11 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 	{
           	
 		foreach (Text text in texts) {
-		    text.text = score.ToString();
+			text.text = score.ToString ();
 		}
 		if (lifePoint <= 0) {
 			CancelBonus ();
-			RestartLevel();
+			RestartLevel ();
 			return;
 		}
 
@@ -112,6 +116,8 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 		
 			}
 			timerBonus--;
+		} else {
+		bonusText.text = "";
 		}
 		
 
@@ -120,12 +126,14 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 		//know if the agent is winning or not
 		if (distanceRegis >distancePlayer)
 		{ //&& minIndex< indexBonusMax) {
-			Debug.Log ("Player distance :" + distancePlayer + ", Agent distance" + distanceRegis + " Agent is LOOSING");
-			if (bonus != null) {
+			Debug.Log ("Player distance :" + distancePlayer + ", Agent distance" + distanceRegis + " Agent is LOSING");
+			isWinning = false;
+			if (bonus != null && !bonusTook && (minIndex == 1|| minIndex ==4||minIndex == 6)) {
 				tryToGetBonus = true;
 			}
 			
 		} else {
+		    isWinning = true;
 			Debug.Log ("Player distance :" + distancePlayer +", Agent distance"+ distanceRegis+ " Agent is WINNING");
 			tryToGetBonus = false;
 
@@ -133,16 +141,16 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 		}
 		float distance = Vector3.Distance (transform.position, ennemies.transform.position);
 		//if the agent is close to ennemy, it avoid them instead of trying to reach the end of the level
-		if (distance < EnemyDistanceRun) {
+		//if (distance < EnemyDistanceRun) {
 		//Debug.Log("EnnemyDistance RUN!!");
-			Vector3 dirToEnnemy = transform.position - ennemies.transform.position;
-			Vector3 newPos = transform.position + dirToEnnemy;
-			agent.destination =newPos;
+		//	Vector3 dirToEnnemy = transform.position - ennemies.transform.position;
+		//	Vector3 newPos = transform.position + dirToEnnemy;
+		//	agent.destination =newPos;
 
-		} else {
+	//	} else {
 			   moveToPoint();
 
-		}
+	//	}
 
 
   }
@@ -179,9 +187,11 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 
     void OnTriggerEnter (Collider col)
 	{
-	if(col.CompareTag("Enemy")){
-	   this.ennemies = col.gameObject;
-	}
+		if (col.CompareTag ("Enemy")) {
+			this.ennemies = col.gameObject;
+		} else if (col.CompareTag ("Bonus")) {
+			bonusTook = true;
+		}
 	}
 
 	void RestartLevel ()
@@ -192,7 +202,7 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 		supervisor.reset = true;
 		tryToGetBonus = false;
 		this.transform.position = StartingPos;
-		this.GetComponent<NavMeshAgent>().enabled = false;
+		this.GetComponent<NavMeshAgent> ().enabled = false;
 		foreach (GameObject g in supervisor.agents) {
 			g.GetComponent<Deplacement_NavMesh> ().index = 0;
 			g.GetComponent<Deplacement_NavMesh> ().agent.SetDestination (g.GetComponent<Deplacement_NavMesh> ().ennemyPattern [g.GetComponent<Deplacement_NavMesh> ().index].position);
@@ -201,19 +211,22 @@ public class IA_Behaviour_Avoiding_Ennemies : MonoBehaviour {
 		GameObject[] balises = GameObject.FindGameObjectsWithTag ("Balise");
 		foreach (GameObject b in balises) {
 			foreach (Collider other in b.GetComponents<BoxCollider>()) {
-			   other.enabled = false;
+				other.enabled = false;
 			}
 		}
 		if (timeBeforeSpawning <= 0) {
-			this.GetComponent<NavMeshAgent>().enabled = true;
+			this.GetComponent<NavMeshAgent> ().enabled = true;
 
 
 			this.GetComponent<TrailRenderer> ().enabled = true;
 			this.GetComponent<MeshRenderer> ().enabled = true;
 			timeBeforeSpawning = timeBeforeSpawningAtStart;
-			firstBalise.SetActive(true);
+			firstBalise.SetActive (true);
 			foreach (Collider other in firstBalise.GetComponents<BoxCollider>()) {
-			   other.enabled = true;
+				other.enabled = true;
+			}
+			if (!bonusTook) {
+			    bonus = bonusSpawners[level];
 			}
 			minIndex = firstBalise.GetComponent<Balise_Behaviour>().safePoint;
 			index = minIndex;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FinalScene : MonoBehaviour {
@@ -21,9 +22,13 @@ public class FinalScene : MonoBehaviour {
 	void Update ()
 	{
 		if (result >= 0) {
-			textEnd.text = "You hacked " + result + "MB."; 
+			textEnd.text = "You stole " + result + "MB of data."; 
 		} else {
-			textEnd.text = "Someone hacked " + (-result) + "MB from you..."; 
+			textEnd.text = "Someone stole " + (-result) + "MB of data from you..."; 
+		}
+
+		if (Input.GetButtonDown ("Jump") || Input.GetButtonDown ("Fire1")) {
+		    SceneManager.LoadScene(0);
 		}
 	}
 }

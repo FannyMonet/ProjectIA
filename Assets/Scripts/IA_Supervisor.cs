@@ -41,7 +41,7 @@ public GameObject startingPosition;
 					player.GetComponent<IA_Behaviour_Avoiding_Ennemies> ().score--;
 			} else if (player.name.Equals ("PLAYER")) {
 				if (player.GetComponent<Player_Movement> ().score > 0)
-				player.GetComponent<Player_Movement> ().score--;
+					player.GetComponent<Player_Movement> ().score--;
 			}
 
 			float t = Mathf.PingPong (Time.time, duration) / duration;
@@ -56,20 +56,25 @@ public GameObject startingPosition;
 		} else if (reset) {
 			light.color = color1;
 			for (int i = 0; i < agents.Length; i++) {
-				agents[i].GetComponent<TrailRenderer>().enabled = false;
+				agents [i].GetComponent<BoxCollider> ().enabled = false;
 
-				agents[i].transform.position = agents[i].GetComponent<Deplacement_NavMesh>().startingPosition;
-			    agents[i].GetComponent<Deplacement_NavMesh>().index =0;
-				agents[i].GetComponent<Deplacement_NavMesh>().moveToPoint(true);
+				agents [i].GetComponent<TrailRenderer> ().enabled = false;
+
+				agents [i].transform.position = agents [i].GetComponent<Deplacement_NavMesh> ().startingPosition;
+				agents [i].GetComponent<Deplacement_NavMesh> ().index = 0;
+				agents [i].GetComponent<Deplacement_NavMesh> ().moveToPoint (true);
 
 				agents [i].GetComponent<MeshRenderer> ().material = defaultMaterial;
 				agents [i].GetComponent<Deplacement_NavMesh> ().playerDetected = false;
 				agents [i].GetComponent<TrailRenderer> ().startColor = color1;
 				agents [i].GetComponent<LineRenderer> ().enabled = true;
-				//agents [i].GetComponent<BoxCollider>().enabled = false;
 
 
 			}
+			for (int i = 0; i < agents.Length; i++) {
+				agents [i].GetComponent<BoxCollider> ().enabled = true;
+			}
+
 			reset = false;
 		}
 	}

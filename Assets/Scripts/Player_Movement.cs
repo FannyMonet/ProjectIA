@@ -14,9 +14,8 @@ public class Player_Movement : MonoBehaviour {
     public Rigidbody rgbd;//RigidBody of the player
 
     public Text[] texts;
-    //public PostProcessingProfile ppp;
 
-    //public PostProcessingProfile ppp;
+    public Text bonusText;
 
     public Transform target;//The end of the level
     public NavMeshAgent agent;//The agent of the player, allows to know how far he is from the end of the level
@@ -60,20 +59,21 @@ public class Player_Movement : MonoBehaviour {
 		source = GetComponent<AudioSource>();
 		supervisor = GameObject.Find("IA_SUPERVISOR PLAYER L1").GetComponent<IA_Supervisor>();
 		timeBeforeSpawning = timeBeforeSpawningAtStart;
+		bonusText = GameObject.Find("BonusTextP").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		foreach (Text text in texts) {
-		    text.text = score.ToString();
+			text.text = score.ToString ();
 		}
 		//Get the remaining distance from the end of the level
 		if (agent.isActiveAndEnabled)
 			remainingDistance = agent.remainingDistance;
 
 		if (lifePoint <= 0) {
-		    CancelBonus();
+			CancelBonus ();
 			RestartLevel ();
 		}
 
@@ -84,6 +84,8 @@ public class Player_Movement : MonoBehaviour {
 		
 			}
 			timerBonus--;
+		} else {
+		bonusText.text = "";
 		}
 
 		//Input to use the bottle

@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetButtonDown ("Jump")) {
+		if (Input.GetButtonDown ("Jump") ||Input.GetButtonDown ("Fire1") ) {
 		    SceneManager.LoadScene(1);
 		}
 	}

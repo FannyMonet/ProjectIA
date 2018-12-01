@@ -16,6 +16,13 @@ public class FinalPointReached : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col){
 	    if(col.CompareTag("Player"))
+	        if(col.name.Equals("REGIS")){
+	           col.GetComponent<IA_Behaviour_Avoiding_Ennemies>().score +=500;
+	        }
+	        else if(col.name.Equals("PLAYER")){
+				col.GetComponent<Player_Movement>().score +=500;
+
+	        }
 	        SceneManager.LoadScene(2);
 	}
 }

@@ -274,7 +274,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Push space to launch process
+  m_Text: Push button to launch process
 --- !u!222 &1042209704
 CanvasRenderer:
   m_ObjectHideFlags: 0

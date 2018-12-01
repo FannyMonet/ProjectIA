@@ -8,13 +8,17 @@ public class BonusCrazySentinelle : MonoBehaviour
 
     public IA_Behaviour_Avoiding_Ennemies Regis;
     public Player_Movement player;
+	public AudioSource audio;
+	public string bonuseffect;
 
 
-    // Use this for initialization
-    void Start()
-    {
+	// Use this for initialization
+	void Start () {
+	    audio = GetComponent<AudioSource>();
         Regis = GameObject.Find("REGIS").GetComponent<IA_Behaviour_Avoiding_Ennemies>();
         player = GameObject.Find("PLAYER").GetComponent<Player_Movement>();
+		bonuseffect = "Virus detected, anti-viruses agents speed increase";
+
 
     }
 
@@ -24,6 +28,8 @@ public class BonusCrazySentinelle : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
+			audio.PlayOneShot(audio.clip);
+
             if (col.name.Equals("REGIS"))
             {
                 foreach (GameObject agent in player.supervisor.agents)
@@ -31,10 +37,12 @@ public class BonusCrazySentinelle : MonoBehaviour
                     agent.GetComponent<NavMeshAgent>().speed = 300;
                     agent.GetComponent<NavMeshAgent>().acceleration = 300;
                 }
+
                 player.timerBonus = 300;
                 Regis.tryToGetBonus = false;
                 Regis.bonus = null;
-                Destroy(gameObject);
+				player.bonusText.text = bonuseffect;
+
             }
             else if (col.name.Equals("PLAYER"))
             {
@@ -44,8 +52,12 @@ public class BonusCrazySentinelle : MonoBehaviour
                     agent.GetComponent<NavMeshAgent>().speed = 300;
                     agent.GetComponent<NavMeshAgent>().acceleration = 300;
                 }
-                Destroy(gameObject);
+				Regis.bonusText.text = bonuseffect;
+
+
             }
+			Destroy(gameObject, 0.5f);
+
         }
     }
 }
