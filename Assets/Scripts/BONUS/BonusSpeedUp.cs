@@ -16,7 +16,8 @@ public class BonusSpeedUp : MonoBehaviour {
 	    audio = GetComponent<AudioSource>();
 		Regis = GameObject.Find("REGIS").GetComponent<IA_Behaviour_Avoiding_Ennemies>();
 		player = GameObject.Find("PLAYER").GetComponent<Player_Movement>();
-		bonuseffect = "Virus detected, movement are uncontrollable";
+		bonuseffect = "Virus detected, movement are uncontrollable !";
+
 
 	}
 

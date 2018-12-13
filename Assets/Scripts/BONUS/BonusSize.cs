@@ -18,7 +18,7 @@ public class BonusSize : MonoBehaviour {
 	    audio = GetComponent<AudioSource>();
 		Regis = GameObject.Find("REGIS").GetComponent<IA_Behaviour_Avoiding_Ennemies>();
 		player = GameObject.Find("PLAYER").GetComponent<Player_Movement>();
-		bonuseffect = "Virus detected, size increase";
+		bonuseffect = "Virus detected, size increase a lot";
 
 	}
 

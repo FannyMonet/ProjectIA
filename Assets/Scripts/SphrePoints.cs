@@ -24,9 +24,9 @@ public class SphrePoints : MonoBehaviour {
 				audio.Play ();
 
 				if(col.name.Equals("PLAYER"))
-				    col.GetComponent<Player_Movement>().score+=100;
+				    col.GetComponent<Player_Movement>().score+=50;
 				else 
-				col.GetComponent<IA_Behaviour_Avoiding_Ennemies>().score += 100;
+				col.GetComponent<IA_Behaviour_Avoiding_Ennemies>().score +=  50;
 
 
 				took = true;

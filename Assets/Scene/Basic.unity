@@ -21032,7 +21032,7 @@ MonoBehaviour:
   pos_2: {x: 1575, y: 375, z: 784}
   gateReached: 0
   levelUp: 0
-  itsMe_Regis: 1
+  itsMe_Regis: 0
   regisPassed: 0
   supervisorNames:
   - IA_SUPERVISOR REGIS L1
@@ -22518,7 +22518,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 935902958}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 93a178a18161eb54780b24ec8d9faaaf, type: 2}
   m_CullingMode: 0
@@ -32411,7 +32411,7 @@ MonoBehaviour:
   pos_2: {x: 1575, y: 375, z: 2141}
   gateReached: 0
   levelUp: 0
-  itsMe_Regis: 1
+  itsMe_Regis: 0
   regisPassed: 0
   supervisorNames:
   - IA_SUPERVISOR REGIS L3
@@ -39524,7 +39524,7 @@ MonoBehaviour:
   pos_2: {x: 1575, y: 375, z: 1643}
   gateReached: 0
   levelUp: 0
-  itsMe_Regis: 1
+  itsMe_Regis: 0
   regisPassed: 0
   supervisorNames:
   - IA_SUPERVISOR REGIS L2

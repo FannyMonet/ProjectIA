@@ -17,7 +17,7 @@ public class BonusSpeed : MonoBehaviour {
 	    audio = GetComponent<AudioSource>();
 		Regis = GameObject.Find("REGIS").GetComponent<IA_Behaviour_Avoiding_Ennemies>();
 		player = GameObject.Find("PLAYER").GetComponent<Player_Movement>();
-		bonuseffect = "Virus detected, anti-viruses agents speed increase";
+		bonuseffect = "Virus detected, connexion lost, can't move";
 
 	}
 	
